@@ -1,5 +1,6 @@
 <?php
 $pageTitle = 'Admin Panel — CMS';
+require_once 'config/app.php';
 require_once 'classes/Auth.php';
 require_once 'classes/User.php';
 require_once 'classes/FileManager.php';
@@ -83,7 +84,7 @@ require_once 'includes/header.php';
                             </select>
                         </form>
                     </td>
-                    <td><?= $u['is_active'] ? '<span class="badge-active">Active</span>' : '<span class="badge-inactive">Disabled</span>' ?></td>
+                    <td><?= $u['is_active'] ? '<span class="badge-status badge-active">Active</span>' : '<span class="badge-status badge-inactive">Disabled</span>' ?></td>
                     <td><?= date('d M Y', strtotime($u['created_at'])) ?></td>
                     <td class="action-cell">
                         <form method="POST" class="inline-form">

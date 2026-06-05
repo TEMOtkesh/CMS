@@ -1,5 +1,6 @@
 <?php
 $pageTitle = 'Dashboard — CMS';
+require_once 'config/app.php';
 require_once 'classes/Auth.php';
 require_once 'classes/FileManager.php';
 

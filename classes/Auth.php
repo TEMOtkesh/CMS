@@ -40,7 +40,7 @@ class Auth {
 
     public function requireLogin(): void {
         if (!$this->check()) {
-            header('Location: /login.php');
+            header('Location: ' . BASE_URL . '/login.php');
             exit;
         }
     }
@@ -48,7 +48,7 @@ class Auth {
     public function requireAdmin(): void {
         $this->requireLogin();
         if (!$this->isAdmin()) {
-            header('Location: /index.php');
+            header('Location: ' . BASE_URL . '/index.php');
             exit;
         }
     }

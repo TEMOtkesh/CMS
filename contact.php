@@ -1,5 +1,6 @@
 <?php
 $pageTitle = 'Contact — CMS';
+require_once 'config/app.php';
 $sent = false;
 $errors = [];
 
