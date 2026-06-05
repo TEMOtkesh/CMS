@@ -7,7 +7,12 @@ require_once 'classes/Photo.php';
 $auth = new Auth();
 $auth->requireLogin();
 
-$user       = $auth->currentUser();
+$user = $auth->currentUser();
+if (!$user) {
+    $auth->logout();
+    header('Location: ' . BASE_URL . '/login.php');
+    exit;
+}
 $photoModel = new Photo();
 $msg = $msgType = '';
 

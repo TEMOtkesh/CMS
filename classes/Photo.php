@@ -13,12 +13,15 @@ class Photo {
     public function upload(array $file, int $userId, string $title, string $desc, array $tags): bool|string {
         if ($file['error'] !== UPLOAD_ERR_OK) return 'Upload failed — please try again.';
 
-        $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (!in_array($file['type'], $allowed)) return 'Only JPG, PNG, GIF, and WebP images are allowed.';
+        $allowed = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/x-png', 'image/gif', 'image/webp'];
+        $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($file['type'], $allowed) && !in_array($ext, $allowedExt)) {
+            return 'Only JPG, PNG, GIF, and WebP images are allowed.';
+        }
         if ($file['size'] > 8 * 1024 * 1024) return 'Image must be under 8 MB.';
 
-        $ext        = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $stored     = uniqid('photo_', true) . '.' . $ext;
+        $stored = uniqid('photo_', true) . '.' . $ext;
         if (!move_uploaded_file($file['tmp_name'], $this->uploadDir . $stored)) return 'Could not save image.';
 
         $stmt = $this->db->prepare(
