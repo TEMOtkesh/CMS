@@ -6,46 +6,89 @@ require_once 'includes/header.php';
 
 <section class="hero">
     <div class="container">
-        <span class="hero-eyebrow">Web Programming Project</span>
-        <h1 class="hero-title">A clean <span class="grad">Content</span><br>Management System</h1>
-        <p class="hero-sub">Upload files, manage users, and control access — all from one simple dashboard.</p>
-        <?php if (!$auth->check()): ?>
-            <div class="hero-actions">
-                <a href="<?= BASE_URL ?>/register.php" class="btn btn-primary">Get Started &rarr;</a>
-                <a href="<?= BASE_URL ?>/login.php"    class="btn btn-outline">Login</a>
+        <div class="hero-left">
+            <span class="hero-tag">Content Management System</span>
+            <h1 class="hero-title">
+                Manage your<br>
+                content, <span class="hl">your way</span>
+            </h1>
+            <p class="hero-sub">
+                Upload files, organise them with tags, control who sees what.
+                Three user roles, one clean interface.
+            </p>
+            <?php if (!$auth->check()): ?>
+                <div class="hero-actions">
+                    <a href="<?= BASE_URL ?>/register.php" class="btn btn-primary">Create account</a>
+                    <a href="<?= BASE_URL ?>/login.php"    class="btn btn-outline">Login</a>
+                </div>
+            <?php else: ?>
+                <div class="hero-actions">
+                    <a href="<?= BASE_URL ?>/dashboard.php" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-stat">
+                <span class="hero-stat-num">5</span>
+                <div class="hero-stat-label">
+                    <strong>Pages</strong>
+                    Home, register, login, dashboard, contact
+                </div>
             </div>
-        <?php else: ?>
-            <div class="hero-actions">
-                <a href="<?= BASE_URL ?>/dashboard.php" class="btn btn-primary">Go to Dashboard &rarr;</a>
+            <div class="hero-stat">
+                <span class="hero-stat-num">3</span>
+                <div class="hero-stat-label">
+                    <strong>User roles</strong>
+                    Admin, moderator, user
+                </div>
             </div>
-        <?php endif; ?>
+            <div class="hero-stat">
+                <span class="hero-stat-num">4</span>
+                <div class="hero-stat-label">
+                    <strong>Database tables</strong>
+                    With 1:N and N:N relations
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="features">
     <div class="container">
-        <p class="section-label">What's included</p>
-        <h2 class="section-title">Everything you need</h2>
-        <div class="cards">
-            <div class="card">
-                <div class="card-icon">&#128196;</div>
-                <h3>File Uploads</h3>
-                <p>Upload images, PDFs, and text files. Tag and organize everything your way.</p>
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2 class="section-title">What it does</h2>
+            <span class="section-divider"></span>
+        </div>
+        <div class="feature-list">
+            <div class="feature-item">
+                <span class="feature-num">01</span>
+                <div class="feature-body">
+                    <h3>File uploads with tagging</h3>
+                    <p>Upload images, PDFs, and text files. Attach comma-separated tags to each file — stored in a separate table with a many-to-many relationship.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">&#128100;</div>
-                <h3>User Roles</h3>
-                <p>Admin, Moderator, and User roles — each with their own level of access.</p>
+            <div class="feature-item">
+                <span class="feature-num">02</span>
+                <div class="feature-body">
+                    <h3>Role-based access control</h3>
+                    <p>Three tiers: admin sees and controls everything, moderator has elevated access, regular users manage only their own files.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">&#128274;</div>
-                <h3>Secure Auth</h3>
-                <p>Email-based registration, bcrypt password hashing, and session management.</p>
+            <div class="feature-item">
+                <span class="feature-num">03</span>
+                <div class="feature-body">
+                    <h3>Email-tied registration</h3>
+                    <p>Accounts are bound to a unique email address. Passwords are hashed with bcrypt. Sessions handle authentication after login.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">&#128203;</div>
-                <h3>Activity Logs</h3>
-                <p>Admins can track every action — role changes, deletions, and more.</p>
+            <div class="feature-item">
+                <span class="feature-num">04</span>
+                <div class="feature-body">
+                    <h3>Admin activity log</h3>
+                    <p>Every admin action — role change, user deletion, file removal — is written to a log file. Admins can read and clear it from the panel.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -53,15 +96,20 @@ require_once 'includes/header.php';
 
 <section class="color-section">
     <div class="container">
-        <p class="section-label">CSS3 Color Tool</p>
-        <h2 class="section-title">Color Picker</h2>
-        <p style="text-align:center;color:var(--text-2);margin-top:-.5rem;margin-bottom:0;font-size:.9rem;">Pick any color to see its HEX, RGBA, and HSL values. Click a badge to copy.</p>
+        <div class="section-header">
+            <span class="section-num">02</span>
+            <h2 class="section-title">Color picker</h2>
+            <span class="section-divider"></span>
+        </div>
+        <p style="color:var(--text-2);font-size:.875rem;margin-bottom:0;">Pick any color — see it in HEX, RGBA, and HSL. Click a value to copy it.</p>
         <div class="color-tool">
-            <input type="color" id="colorPicker" value="#6366f1">
-            <div class="color-values">
-                <span class="badge" id="hexVal">#6366F1</span>
-                <span class="badge" id="rgbaVal">rgba(99,102,241,1)</span>
-                <span class="badge" id="hslVal">hsl(239,84%,67%)</span>
+            <input type="color" id="colorPicker" value="#c9a227">
+            <div>
+                <div class="color-values">
+                    <span class="badge" id="hexVal">#C9A227</span>
+                    <span class="badge" id="rgbaVal">rgba(201,162,39,1)</span>
+                    <span class="badge" id="hslVal">hsl(43,67%,47%)</span>
+                </div>
             </div>
             <div class="color-preview" id="colorPreview"></div>
         </div>

@@ -1,7 +1,7 @@
 </main>
 <footer class="site-footer">
     <div class="container footer-inner">
-        <span class="logo-sm">CMS<span>.</span></span>
+        <span class="logo-sm">CMS<em>.</em></span>
         <p>&copy; <?= date('Y') ?> CMS Project &mdash; PHP &amp; MySQL</p>
     </div>
 </footer>
