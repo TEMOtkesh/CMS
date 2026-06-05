@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } elseif ($action === 'delete_photo') {
         $pid    = (int)($_POST['photo_id'] ?? 0);
-        $uid    = $auth->isAdmin() ? 0 : (int)$user['id'];
+        $uid    = $auth->isMod() ? 0 : (int)$user['id'];
         $ok     = $photoModel->delete($pid, $uid);
         $msg     = $ok ? 'Photo deleted.' : 'Could not delete that photo.';
         $msgType = $ok ? 'success' : 'error';

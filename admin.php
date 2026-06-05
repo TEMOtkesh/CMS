@@ -7,7 +7,7 @@ require_once 'classes/Photo.php';
 require_once 'classes/Logger.php';
 
 $auth = new Auth();
-$auth->requireAdmin();
+$auth->requireMod();
 
 $userModel  = new User();
 $photoModel = new Photo();
@@ -65,13 +65,17 @@ require_once 'includes/header.php';
     <?php if ($msg): ?><div class="alert alert-<?= $msgType ?>"><?= htmlspecialchars($msg) ?></div><?php endif; ?>
 
     <div class="tabs" id="adminTabs">
+        <?php if ($auth->isAdmin()): ?>
         <button class="tab-btn active" data-tab="users">Users (<?= count($users) ?>)</button>
         <button class="tab-btn"        data-tab="photos">Photos (<?= count($photos) ?>)</button>
         <button class="tab-btn"        data-tab="logs">Activity log</button>
+        <?php else: ?>
+        <button class="tab-btn active" data-tab="photos">Photos (<?= count($photos) ?>)</button>
+        <?php endif; ?>
     </div>
 
-    <!-- Users tab -->
-    <div class="tab-content" id="tab-users">
+    <!-- Users tab (admin only) -->
+    <div class="tab-content <?= $auth->isAdmin() ? '' : 'hidden' ?>" id="tab-users">
         <table class="data-table">
             <thead>
                 <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr>
@@ -118,7 +122,7 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Photos tab -->
-    <div class="tab-content hidden" id="tab-photos">
+    <div class="tab-content <?= $auth->isAdmin() ? 'hidden' : '' ?>" id="tab-photos">
         <table class="data-table">
             <thead>
                 <tr><th>Preview</th><th>Title</th><th>By</th><th>Tags</th><th>Featured</th><th>Date</th><th>Actions</th></tr>
@@ -157,7 +161,7 @@ require_once 'includes/header.php';
         </table>
     </div>
 
-    <!-- Log tab -->
+    <!-- Log tab (admin only) -->
     <div class="tab-content hidden" id="tab-logs">
         <div class="log-actions">
             <form method="POST" onsubmit="return confirm('Clear the activity log?')">

@@ -62,8 +62,19 @@ require_once 'includes/header.php';
             <?php endif; ?>
 
             <?php if ($auth->check()): ?>
-                <?php if ($auth->isAdmin() || ($currentUser && $currentUser['id'] == $photo['user_id'])): ?>
+                <?php $canModerate = $auth->isMod(); $isOwner = $currentUser && $currentUser['id'] == $photo['user_id']; ?>
+                <?php if ($canModerate || $isOwner): ?>
                 <div class="photo-actions">
+                    <?php if ($canModerate): ?>
+                    <form method="POST" action="<?= BASE_URL ?>/mod.php">
+                        <input type="hidden" name="action"   value="toggle_featured">
+                        <input type="hidden" name="photo_id" value="<?= $photo['id'] ?>">
+                        <input type="hidden" name="redirect" value="photo">
+                        <button class="btn btn-ghost btn-sm">
+                            <?= $photo['is_featured'] ? 'Unfeature' : 'Feature' ?>
+                        </button>
+                    </form>
+                    <?php endif; ?>
                     <form method="POST" action="<?= BASE_URL ?>/dashboard.php"
                           onsubmit="return confirm('Delete this photo permanently?')">
                         <input type="hidden" name="action"   value="delete_photo">

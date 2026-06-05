@@ -47,6 +47,8 @@ $base        = BASE_URL;
                 <a href="<?= $base ?>/dashboard.php">My Photos</a>
                 <?php if ($auth->isAdmin()): ?>
                     <a href="<?= $base ?>/admin.php">Admin</a>
+                <?php elseif ($auth->isMod()): ?>
+                    <a href="<?= $base ?>/admin.php">Panel</a>
                 <?php endif; ?>
                 <a href="<?= $base ?>/contact.php">Contact</a>
                 <span class="nav-divider"></span>

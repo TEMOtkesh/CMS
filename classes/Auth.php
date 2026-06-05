@@ -73,6 +73,14 @@ class Auth {
         }
     }
 
+    public function requireMod(): void {
+        $this->requireLogin();
+        if (!$this->isMod()) {
+            header('Location: ' . BASE_URL . '/index.php');
+            exit;
+        }
+    }
+
     public function currentUser(): array|false {
         if (!$this->check()) return false;
         return $this->userModel->findById((int)$_SESSION['user_id']);
