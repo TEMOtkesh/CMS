@@ -19,7 +19,11 @@ class User {
     }
 
     public function findByEmail(string $email): array|false {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
+        $stmt = $this->db->prepare(
+            'SELECT u.*, r.name AS role_name FROM users u
+             JOIN roles r ON u.role_id = r.id
+             WHERE u.email = ? LIMIT 1'
+        );
         $stmt->execute([$email]);
         return $stmt->fetch();
     }
