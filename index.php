@@ -115,7 +115,7 @@ require_once 'includes/header.php';
             <h2 class="section-title">Color picker</h2>
             <span class="section-divider"></span>
         </div>
-        <p class="color-desc">Pick any color to see it expressed in HEX, RGBA, and HSL. Click a value to copy it to clipboard.</p>
+        <p class="color-desc">Pick a color to set the site accent theme. Your choice is saved and applied on every page. Values shown in HEX, RGBA, and HSL — click to copy.</p>
         <div class="color-tool">
             <input type="color" id="colorPicker" value="#c9a227">
             <div class="color-outputs">
@@ -124,7 +124,10 @@ require_once 'includes/header.php';
                     <span class="badge" id="rgbaVal">rgba(201,162,39,1)</span>
                     <span class="badge" id="hslVal">hsl(43,67%,47%)</span>
                 </div>
-                <div class="color-preview" id="colorPreview"></div>
+                <div style="display:flex;align-items:center;gap:.75rem;">
+                    <div class="color-preview" id="colorPreview"></div>
+                    <button id="resetTheme" class="btn btn-ghost btn-sm">Reset default</button>
+                </div>
             </div>
         </div>
     </div>

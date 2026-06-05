@@ -49,7 +49,7 @@ $(function () {
         }
     });
 
-    /* ── Color picker → HEX / RGBA / HSL ────────── */
+    /* ── Theme color picker → HEX / RGBA / HSL + CSS vars ── */
     function hexToRgb(hex) {
         return {
             r: parseInt(hex.slice(1, 3), 16),
@@ -76,18 +76,53 @@ $(function () {
         return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
     }
 
+    function lightenHex(r, g, b, pct) {
+        return '#' + [r, g, b].map(function (c) {
+            return Math.min(255, Math.round(c + (255 - c) * pct / 100))
+                .toString(16).padStart(2, '0');
+        }).join('');
+    }
+
+    function applyTheme(hex) {
+        var rgb  = hexToRgb(hex);
+        var root = document.documentElement;
+        root.style.setProperty('--gold',      hex);
+        root.style.setProperty('--gold-light', lightenHex(rgb.r, rgb.g, rgb.b, 20));
+        root.style.setProperty('--gold-dim',   'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.15)');
+        root.style.setProperty('--gold-glow',  'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.3)');
+    }
+
     function updateColor(hex) {
         var rgb = hexToRgb(hex);
         var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
         $('#hexVal').text(hex.toUpperCase());
         $('#rgbaVal').text('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',1)');
         $('#hslVal').text('hsl(' + hsl.h + ',' + hsl.s + '%,' + hsl.l + '%)');
         $('#colorPreview').css('background', hex)
-            .css('box-shadow', '0 4px 20px rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.4)');
+            .css('box-shadow', '0 4px 20px rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.45)');
+
+        applyTheme(hex);
+        localStorage.setItem('folioTheme', hex);
     }
 
     $('#colorPicker').on('input change', function () { updateColor($(this).val()); });
-    if ($('#colorPicker').length) updateColor($('#colorPicker').val());
+
+    /* Initialise picker from saved theme or default */
+    if ($('#colorPicker').length) {
+        var saved = localStorage.getItem('folioTheme');
+        if (saved && /^#[0-9a-f]{6}$/i.test(saved)) {
+            $('#colorPicker').val(saved);
+        }
+        updateColor($('#colorPicker').val());
+    }
+
+    /* ── Reset theme to default gold ─────────────── */
+    $('#resetTheme').on('click', function () {
+        var def = '#c9a227';
+        $('#colorPicker').val(def);
+        updateColor(def);
+    });
 
     /* ── Copy badge value to clipboard ───────────── */
     $('.color-values').on('click', '.badge', function () {

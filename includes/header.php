@@ -15,6 +15,27 @@ $base        = BASE_URL;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= $base ?>/assets/css/style.css">
+    <script>
+        /* Apply saved theme color before first paint — no flash */
+        (function () {
+            var hex = localStorage.getItem('folioTheme');
+            if (!hex || !/^#[0-9a-f]{6}$/i.test(hex)) return;
+            var r = parseInt(hex.slice(1,3),16),
+                g = parseInt(hex.slice(3,5),16),
+                b = parseInt(hex.slice(5,7),16);
+            var root = document.documentElement;
+            root.style.setProperty('--gold',       hex);
+            root.style.setProperty('--gold-light', lighten(r,g,b,20));
+            root.style.setProperty('--gold-dim',   'rgba('+r+','+g+','+b+',.15)');
+            root.style.setProperty('--gold-glow',  'rgba('+r+','+g+','+b+',.3)');
+            function lighten(r,g,b,pct){
+                return '#'+[r,g,b].map(function(c){
+                    return Math.min(255,Math.round(c+(255-c)*pct/100))
+                        .toString(16).padStart(2,'0');
+                }).join('');
+            }
+        })();
+    </script>
 </head>
 <body>
 <header class="site-header">
