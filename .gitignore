@@ -1,0 +1,19 @@
+# Dependencies / vendor
+vendor/
+
+# Environment / config with secrets
+config/db.php
+
+# Uploaded files (track structure, not content)
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+~$*
