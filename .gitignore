@@ -2,7 +2,7 @@
 vendor/
 
 # Environment / config with secrets
-config/db.php
+# config/db.php — included in repo (default XAMPP values, no secrets)
 
 # Uploaded files (track structure, not content)
 uploads/*
